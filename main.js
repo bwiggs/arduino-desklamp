@@ -1,4 +1,4 @@
-var Desklamp = require('./lamp');
+var DeskLamp = require('./desklamp');
 var WebServer = require('./webserver');
 
 console.log();
@@ -14,8 +14,8 @@ console.log(" Author: Brian Wigginton - brianwiggintongmail.com ");
 console.log("---------------------------------------------------");
 console.log();
 
-
-Desklamp.connect(function() {
+DeskLamp.connect(function() {
 	WebServer.start();
 });
+
 
