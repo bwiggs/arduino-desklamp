@@ -1,0 +1,31 @@
+{
+  "name": "arduino-desklamp",
+  "version": "0.0.0",
+  "description": "Arduino & Node powered Desk Lamp",
+  "main": "server.js",
+  "dependencies": {
+    "colors": "~0.6.2",
+    "express": "~3.4.4",
+    "serialport": "~1.2.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bawigga/arduino-desklamp.git"
+  },
+  "keywords": [
+    "arduino",
+    "nodejs",
+    "serial"
+  ],
+  "author": "Brian Wigginton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bawigga/arduino-desklamp/issues"
+  }
+}
+
