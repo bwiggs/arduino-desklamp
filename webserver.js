@@ -24,6 +24,11 @@ app.get('/on', function(req, res) {
 	res.send();
 });
 
+app.get('/mode/:mode', function(req, res) {
+	DeskLamp.emit('mode', req.params.mode);
+	res.send();
+});
+
 app.get('/rgb/:color', function(req, res) {
 	var rgb = req.params.color.split(',');
 	if(rgb.length == 3) {
