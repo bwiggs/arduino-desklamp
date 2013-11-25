@@ -35,7 +35,9 @@ var DeskLamp = function() {
 
 	this.on('mode', function(name) {
 		this.stop();
-		this[name]();
+		if(this[name] !== undefined) {
+			this[name]();
+		}
 	});
 };
 
@@ -161,5 +163,10 @@ DeskLamp.prototype.macbook = function() {
 		self.emit('color', r, g, b);
 	}, speed));
 };
+
+DeskLamp.prototype.romantic = function() {
+	this.emit('color', 255, 0, 200);
+}
+
 
 module.exports = new DeskLamp();
