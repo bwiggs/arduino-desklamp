@@ -15,6 +15,7 @@ console.log("---------------------------------------------------");
 console.log();
 
 DeskLamp.connect(function() {
+	DeskLamp.emit('on');
 	WebServer.start();
 });
 
