@@ -1,4 +1,4 @@
-var DeskLamp = require('./desklamp');
+GLOBAL.DeskLamp = require('./desklamp');
 var WebServer = require('./webserver');
 
 console.log();
