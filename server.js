@@ -12,9 +12,9 @@ console.log(" | |_| |  __/\\__ \\   <| |__| (_| | | | | | | |_) |");
 console.log(" |____/ \\___||___/_|\\_\\_____\\__,_|_| |_| |_| .__/ ");
 console.log("                                           |_|    ");
 console.log("                                                  ");
-console.log("--------------------------------------------------");
-console.log(" Author: Brian Wigginton - brianwiggintongmail.com");
-console.log("--------------------------------------------------");
+console.log("---------------------------------------------------");
+console.log(" Author: Brian Wigginton - brianwiggintongmail.com ");
+console.log("---------------------------------------------------");
 console.log();
 
 var app;
@@ -35,10 +35,9 @@ serialPort.on("open", function() {
 var r = 255, g = 255, b = 255;
 
 function connected() {
-	console.log('Opened '.green + device.yellow + ' @ ' + baudrate.toString().blue + ' bps'.blue);
-	console.log();
-
+	console.log('Serial Device '.green + device.yellow + ' @ ' + baudrate.toString().blue + ' bps'.blue);
 	startServer();
+	console.log();
 
 	serialPort.on('data', function(data) {
 		console.info('∞ '.magenta + data);
@@ -48,10 +47,18 @@ function connected() {
 
 function startServer() {
 	app = express();
+	
+	app.set('views', __dirname + '/views');
+	app.set('view engine', 'jade');
+	app.use(express.logger('dev'));
+	app.use(express.static(__dirname + '/public'));
+
 	app.get('/', function(req, res) {
 		res.send('<input type="color">');
 	});
+	
 	app.listen(3000);
+	console.log('Express listening'.green + ' on ' + 'http://localhost:3000'.yellow);
 }
 
 function colorize() {
