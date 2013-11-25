@@ -1,5 +1,4 @@
 var colors = require('colors');
-var express = require('express');
 var serialport = require("serialport");
 var SerialPort = serialport.SerialPort;
 var util = require('util');
@@ -17,15 +16,15 @@ console.log(" Author: Brian Wigginton - brianwiggintongmail.com");
 console.log("--------------------------------------------------");
 console.log();
 
-var app;
-
+// TODO: make this dynamic, if there's only one option use it, otherwise
+// prompt for the user to choose a device
 var device = "/dev/tty.usbmodem1421";
 var baudrate = 9600;
 
 var serialPort = new SerialPort(device, {
 	baudrate: baudrate,
 	parser: serialport.parsers.readline("\n")
-})
+});
 
 serialPort.on("open", function() {
 	setTimeout(connected, 1000);
@@ -38,20 +37,10 @@ function connected() {
 	console.log('Opened '.green + device.yellow + ' @ ' + baudrate.toString().blue + ' bps'.blue);
 	console.log();
 
-	startServer();
-
 	serialPort.on('data', function(data) {
 		console.info('∞ '.magenta + data);
 	});
 	setInterval(pulse, 50);
-}
-
-function startServer() {
-	app = express();
-	app.get('/', function(req, res) {
-		res.send('<input type="color">');
-	});
-	app.listen(3000);
 }
 
 function colorize() {
