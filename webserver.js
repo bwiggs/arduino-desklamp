@@ -14,10 +14,24 @@ app.get('/', function(req, res) {
 	res.send('<input type="color">');
 });
 
-app.get('/color/:color', function(req, res) {
-	console.dir(req.params);
-	res.send(req.params)
-	serialPort.write(req.params.color + '\n');
+app.get('/off', function(req, res) {
+	DeskLamp.emit('off');
+	res.send();
+});
+
+app.get('/on', function(req, res) {
+	DeskLamp.emit('on');
+	res.send();
+});
+
+app.get('/rgb/:color', function(req, res) {
+	var rgb = req.params.color.split(',');
+	if(rgb.length == 3) {
+		DeskLamp.emit('color', rgb[0], rgb[1], rgb[2]);
+	} else {
+		res.send('Could not parse rgb value. Use: /rgb/[INT,INT,INT]');
+	}
+	res.send(rgb);
 });
 
 // EXPORTS

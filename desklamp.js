@@ -21,6 +21,14 @@ var DeskLamp = function() {
 	this.on('color', function(r, g, b) {
 		this.setColor(r, g, b);
 	});
+
+	this.on('on', function() {
+		this.setColor(255, 255, 255);
+	});
+
+	this.on('off', function() {
+		this.setColor(0,0,0);
+	});
 };
 
 /**
