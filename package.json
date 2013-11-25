@@ -1,6 +1,6 @@
 {
   "name": "arduino-desklamp",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Arduino & Node powered Desk Lamp",
   "main": "server.js",
   "dependencies": {
