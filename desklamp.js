@@ -34,6 +34,7 @@ var DeskLamp = function() {
 	});
 
 	this.on('mode', function(name) {
+		this.stop();
 		this[name]();
 	});
 };
@@ -134,20 +135,31 @@ DeskLamp.prototype.police = function() {
 	}
 }
 
+DeskLamp.prototype.macbook = function() {
+
+	var self = this;
+	var cycle = false;
+
+	var r = 0, g = 0, b = 0;
+	var delta = 2;
+	var max = 255, min = 30;
+	var speed = 30;
+
+	this.modes.push(setInterval(function() {
+		if(cycle) {
+			r+=delta;
+			g+=delta;
+			b+=delta;
+			if(r >= max) cycle = false;
+		} else {
+			r-=delta;
+			g-=delta;
+			b-=delta;
+			if(r <= min) cycle = true;
+		}
+
+		self.emit('color', r, g, b);
+	}, speed));
+};
+
 module.exports = new DeskLamp();
-
-//function pulse() {
-	//if(pulseInhale) {
-		//r+=5;
-		//g+=5;
-		//b+=5;
-		//if(r >= 255) pulseInhale = false;
-	//} else {
-		//r-=5;
-		//g-=5;
-		//b-=5;
-		//if(r <= 50) pulseInhale = true;
-	//}
-
-	//setColor(r, g, b);
-//}
