@@ -17,6 +17,10 @@ var DeskLamp = function() {
 	this.r;
 	this.g;
 	this.b;
+
+	this.on('color', function(r, g, b) {
+		this.setColor(r, g, b);
+	});
 };
 
 /**
@@ -40,7 +44,7 @@ DeskLamp.prototype.connect = function (callback) {
 		setTimeout(function() {
 			self.connected();
 			callback();
-		}, 1000);
+		}, 1300);
 	});
 };
 
@@ -59,6 +63,7 @@ DeskLamp.prototype.connected = function() {
  * Sets the color of the leds
  */
 DeskLamp.prototype.setColor = function(r, g, b) {
+	//console.log(r.toString().red + ',' + g.toString().green + ',' + b.toString().blue);
 	this.serialPort.write(r + ',' + g + ',' + b + '\n');
 };
 
