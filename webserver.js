@@ -15,24 +15,24 @@ app.get('/', function(req, res) {
 });
 
 app.get('/off', function(req, res) {
-	DeskLamp.emit('off');
+	LAMP.emit('off');
 	res.send();
 });
 
 app.get('/on', function(req, res) {
-	DeskLamp.emit('on');
+	LAMP.emit('on');
 	res.send();
 });
 
 app.get('/mode/:mode', function(req, res) {
-	DeskLamp.emit('mode', req.params.mode);
+	LAMP.emit('mode', req.params.mode);
 	res.send();
 });
 
 app.get('/rgb/:color', function(req, res) {
 	var rgb = req.params.color.split(',');
 	if(rgb.length == 3) {
-		DeskLamp.emit('color', rgb[0], rgb[1], rgb[2]);
+		LAMP.emit('color', rgb[0], rgb[1], rgb[2]);
 	} else {
 		res.send('Could not parse rgb value. Use: /rgb/[INT,INT,INT]');
 	}

@@ -1,5 +1,8 @@
-GLOBAL.DeskLamp = require('./desklamp');
+var DeskLamp = require('./desklamp');
 var WebServer = require('./webserver');
+
+var ConsoleLamp = require('./devices/console');
+
 
 console.log();
 console.log("  ____            _    _                          ");
@@ -14,9 +17,7 @@ console.log(" Author: Brian Wigginton - brianwiggintongmail.com ");
 console.log("---------------------------------------------------");
 console.log();
 
-DeskLamp.connect(function() {
-	DeskLamp.emit('on');
+GLOBAL.LAMP = new DeskLamp(new ConsoleLamp(), function() {
 	WebServer.start();
 });
-
 

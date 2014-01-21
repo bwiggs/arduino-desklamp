@@ -1,36 +1,32 @@
-var serialport = require("serialport");
 var colors = require('colors');
-var SerialPort = serialport.SerialPort;
 var EventEmitter = require('events').EventEmitter;
 
 /**
  * constructor function
  */
-var DeskLamp = function() {
+var DeskLamp = function(device, onReady) {
 
 	var self = this;
 
-	this.device = "/dev/tty.usbmodem1421";
-	this.baudrate = 9600;
-	this.serialPort;
 
 	this.r;
 	this.g;
 	this.b;
 
 	this.modes = [];
+	this.readyCallbacks = [];
 
 	this.on('color', function(r, g, b) {
-		this.setColor(r, g, b);
+		device.setColor(r, g, b);
 	});
 
 	this.on('on', function() {
-		this.setColor(255, 255, 255);
+		device.setColor(255, 255, 255);
 	});
 
 	this.on('off', function() {
 		this.stop();
-		this.setColor(0,0,0);
+		device.setColor(0,0,0);
 	});
 
 	this.on('mode', function(name) {
@@ -39,12 +35,23 @@ var DeskLamp = function() {
 			this[name]();
 		}
 	});
+
+	device.on('ready', function() {
+		onReady();
+	});
+		
+	device.connect();
 };
 
 /**
  * Event emmitter goodness!
  */
 DeskLamp.prototype.__proto__ = EventEmitter.prototype;
+
+
+DeskLamp.prototype.ready = function(fn) {
+	this.readyCallbacks << fn;
+};
 
 /**
  * Kills any running modes
@@ -53,45 +60,6 @@ DeskLamp.prototype.stop = function() {
 	this.modes.forEach(function(mode) {
 		clearInterval(mode);
 	});
-};
-
-/**
- * Initilize the DeskLamp, connects to the serial port.
- */
-DeskLamp.prototype.connect = function (callback) {
-	var self = this;
-
-	this.serialPort = new SerialPort(this.device, {
-		baudrate: this.baudrate,
-		parser: serialport.parsers.readline("\n")
-	});
-
-	this.serialPort.on("open", function() {
-		// need to wait for a second, who knows why.
-		setTimeout(function() {
-			self.connected();
-			callback();
-		}, 1300);
-	});
-};
-
-/**
- * connected handler for when the serial connection is open.
- */
-DeskLamp.prototype.connected = function() {
-	console.log('DeskLamp '.green + this.device.yellow + ' @ ' + this.baudrate.toString().blue + ' bps'.blue);
-
-	this.serialPort.on('data', function(data) {
-		console.info('∞ '.magenta + data);
-	});
-};
-
-/**
- * Sets the color of the leds
- */
-DeskLamp.prototype.setColor = function(r, g, b) {
-	//console.log(r.toString().red + ',' + g.toString().green + ',' + b.toString().blue);
-	this.serialPort.write(r + ',' + g + ',' + b + '\n');
 };
 
 /**
@@ -169,4 +137,4 @@ DeskLamp.prototype.romantic = function() {
 };
 
 
-module.exports = new DeskLamp();
+module.exports = DeskLamp;
