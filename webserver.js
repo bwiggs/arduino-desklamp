@@ -14,22 +14,22 @@ app.get('/', function(req, res) {
 	res.render('index.ejs');	
 });
 
-app.get('/off', function(req, res) {
+app.get('/api/off', function(req, res) {
 	LAMP.emit('off');
 	res.send();
 });
 
-app.get('/on', function(req, res) {
+app.get('/api/on', function(req, res) {
 	LAMP.emit('on');
 	res.send();
 });
 
-app.get('/mode/:mode', function(req, res) {
+app.get('/api/mode/:mode', function(req, res) {
 	LAMP.emit('mode', req.params.mode);
 	res.send();
 });
 
-app.get('/rgb/:color', function(req, res) {
+app.get('/api/rgb/:color', function(req, res) {
 	LAMP.emit('stop');
 	var rgb = req.params.color.split(',');
 	if(rgb.length == 3) {
@@ -40,12 +40,11 @@ app.get('/rgb/:color', function(req, res) {
 	res.send(rgb);
 });
 
-app.get('/events', function(req, res) {
+app.get('/api/events', function(req, res) {
 	req.socket.setTimeout(Infinity);
 
 	//res.write("data: " + message + '\n\n'); // Note the extra newline
 	LAMP.on('color', function(r, g, b) {
-		console.log('aslkdcaksdcasc');
 		res.write("data: "+r+","+g+","+b+"\n\n");
 	});
 

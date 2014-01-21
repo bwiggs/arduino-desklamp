@@ -42,20 +42,23 @@
 	<script>
 		$('#On').on('click', function(e) {
 				e.preventDefault();
-				$.get('/on');
+				$.get('/api/on');
 		});
+
 		$('#Off').on('click', function(e) {
 				e.preventDefault();
-				$.get('/off');
+				$.get('/api/off');
 		});		
+
 		$('#Mode').on('change', function(e) {
 				e.preventDefault();
-				$.get('/mode/'+e.target.value);
+				$.get('/api/mode/'+e.target.value);
 		});		
+
 		$('#Color').on('keyup', function(e) {
 				var isRGB = /\d{1,3},\d{1,3},\d{1,3}/.test(e.target.value);
 				if(isRGB) {
-					$.get('/rgb/'+e.target.value);
+					$.get('/api/rgb/'+e.target.value);
 				}
 		});
 	</script>
