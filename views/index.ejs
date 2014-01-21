@@ -1,5 +1,25 @@
 <html>
 	<head>
+	<style>
+		#Lamp {
+			background: #000;
+			position: absolute;
+			border: 1px solid #000;
+			bottom: 10px;
+			right: 10px;
+		}
+
+		#Lamp iframe {
+			border: 0;
+		}
+
+		#Lamp p {
+			margin: 0;
+			color: #fff;
+			font-weight: bold;
+			text-align: center;
+		}
+	</style>
 	</head>
 	<body>
 	<form action="">
@@ -7,12 +27,17 @@
 		<input id="Off" type="button" value="Off" />
 		<input id="Color" />
 		<select id="Mode">
+			<option disabled selected>Select</option>
 			<option value="police">Police</option>
 			<option value="romantic">Romantic</option>
 			<option value="macbook">Macbook Pro</option>
 		</select>
 
 	</form>
+	<div id="Lamp">
+		<iframe src="/lamp"></iframe>
+		<p>Lamp Emulator</p>
+	</div>
 	<script src="/javascript/jquery.min.js"></script>
 	<script>
 		$('#On').on('click', function(e) {
