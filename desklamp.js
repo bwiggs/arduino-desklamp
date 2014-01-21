@@ -8,13 +8,7 @@ var DeskLamp = function(device, onReady) {
 
 	var self = this;
 
-
-	this.r;
-	this.g;
-	this.b;
-
 	this.modes = [];
-	this.readyCallbacks = [];
 
 	this.on('color', function(r, g, b) {
 		device.setColor(r, g, b);
@@ -22,6 +16,10 @@ var DeskLamp = function(device, onReady) {
 
 	this.on('on', function() {
 		device.setColor(255, 255, 255);
+	});
+
+	this.on('stop', function() {
+		this.stop();
 	});
 
 	this.on('off', function() {
@@ -47,11 +45,6 @@ var DeskLamp = function(device, onReady) {
  * Event emmitter goodness!
  */
 DeskLamp.prototype.__proto__ = EventEmitter.prototype;
-
-
-DeskLamp.prototype.ready = function(fn) {
-	this.readyCallbacks << fn;
-};
 
 /**
  * Kills any running modes

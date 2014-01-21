@@ -30,6 +30,7 @@ app.get('/mode/:mode', function(req, res) {
 });
 
 app.get('/rgb/:color', function(req, res) {
+	LAMP.emit('stop');
 	var rgb = req.params.color.split(',');
 	if(rgb.length == 3) {
 		LAMP.emit('color', rgb[0], rgb[1], rgb[2]);
@@ -39,10 +40,41 @@ app.get('/rgb/:color', function(req, res) {
 	res.send(rgb);
 });
 
+app.get('/events', function(req, res) {
+	req.socket.setTimeout(Infinity);
+
+	//res.write("data: " + message + '\n\n'); // Note the extra newline
+	LAMP.on('color', function(r, g, b) {
+		console.log('aslkdcaksdcasc');
+		res.write("data: "+r+","+g+","+b+"\n\n");
+	});
+
+
+		//res.write("data: " + message + '\n\n'); // Note the extra newline
+	LAMP.on('on', function() {
+		res.write("data: 255,255,255\n\n");
+	});
+
+	LAMP.on('off', function() {
+		res.write("data: 0,0,0\n\n");
+	});
+
+	res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive'
+  });
+	res.write('\n');
+});
+
+app.get('/lamp', function(req, res) {
+	res.render('lamp.ejs');	
+});
+
 // EXPORTS
 
 exports.start = function() {
 	app.listen(3000);
 	console.log('Express listening'.green + ' on ' + 'http://localhost:3000'.yellow);
-}
+};
 

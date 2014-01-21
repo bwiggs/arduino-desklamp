@@ -1,0 +1,12 @@
+<html>
+	<style>
+		html, body {margin: 0;}
+	</style>
+	<script>
+		var evtSource = new EventSource("/events");
+		evtSource.onmessage = function(e) {
+			document.body.style.backgroundColor = 'rgb('+e.data+')';
+		};
+	</script>
+	<body></body>
+</html>
