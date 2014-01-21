@@ -1,9 +1,3 @@
-var DeskLamp = require('./desklamp');
-var WebServer = require('./webserver');
-
-var ConsoleLamp = require('./devices/console');
-
-
 console.log();
 console.log("  ____            _    _                          ");
 console.log(" |  _ \\  ___  ___| | _| |    __ _ _ __ ___  _ __  ");
@@ -17,7 +11,15 @@ console.log(" Author: Brian Wigginton - brianwiggintongmail.com ");
 console.log("---------------------------------------------------");
 console.log();
 
-GLOBAL.LAMP = new DeskLamp(new ConsoleLamp(), function() {
+var DeskLamp = require('./desklamp');
+var WebServer = require('./webserver');
+
+var ConsoleLamp = require('./devices/console');
+var MODES = require('./modes');
+
+console.dir(MODES);
+
+GLOBAL.LAMP = new DeskLamp(new ConsoleLamp(), MODES, function() {
 	WebServer.start();
 });
 
