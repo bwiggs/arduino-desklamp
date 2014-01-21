@@ -1,7 +1,7 @@
 var serialport = require("serialport");
 var SerialPort = serialport.SerialPort;
 
-var SerialDevice = function() {
+var ArduinoUSB = function() {
 	this.device = "/dev/tty.usbmodem1421";
 	this.baudrate = 9600;
 	this.serialPort = null;
@@ -11,7 +11,7 @@ var SerialDevice = function() {
 /**
  * Initilize the SerialDevice
  */
-SerialDevice.prototype.connect = function (callback) {
+ArduinoUSB.prototype.connect = function (callback) {
 	var self = this;
 
 	this.serialPort = new SerialPort(this.device, {
@@ -32,7 +32,7 @@ SerialDevice.prototype.connect = function (callback) {
 /**
  * connected handler for when the serial connection is open.
  */
-SerialDevice.prototype.connected = function() {
+ArduinoUSB.prototype.connected = function() {
 	console.log('DeskLamp '.green + this.device.yellow + ' @ ' + this.baudrate.toString().blue + ' bps'.blue);
 
 	this.serialPort.on('data', function(data) {
@@ -43,9 +43,9 @@ SerialDevice.prototype.connected = function() {
 /**
  * Sets the color of the leds
  */
-SerialDevice.prototype.setColor = function(r, g, b) {
+ArduinoUSB.prototype.setColor = function(r, g, b) {
 	//console.log(r.toString().red + ',' + g.toString().green + ',' + b.toString().blue);
 	this.serialPort.write(r + ',' + g + ',' + b + '\n');
 };
 
-module.exports = SerialDevice;
+module.exports = ArduinoUSB;
