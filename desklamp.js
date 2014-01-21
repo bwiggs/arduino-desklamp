@@ -114,7 +114,7 @@ DeskLamp.prototype.police = function() {
 	function lights() {
 		cycle ?
 			self.emit('color',255,0,0):
-			self.emit('color',0,0,255)
+			self.emit('color',0,0,255);
 
 		cycle = !cycle;
 	}
@@ -128,14 +128,14 @@ DeskLamp.prototype.police = function() {
 			lights();
 			iteration += 1;	
 
-			if(iteration % 10 == 0) {
+			if(iteration % 10 === 0) {
 				self.stop();
 				self.modes.push(intervalRunner());
 				if(iteration == 100) { iteration = 0; }
 			}
-		}, speed)
+		}, speed);
 	}
-}
+};
 
 DeskLamp.prototype.macbook = function() {
 
@@ -166,7 +166,7 @@ DeskLamp.prototype.macbook = function() {
 
 DeskLamp.prototype.romantic = function() {
 	this.emit('color', 255, 0, 200);
-}
+};
 
 
 module.exports = new DeskLamp();
