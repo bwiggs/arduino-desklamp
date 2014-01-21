@@ -11,7 +11,7 @@ app.use(express.static(__dirname + '/public'));
 // ROUTES
 
 app.get('/', function(req, res) {
-	res.send('<input type="color">');
+	res.render('index.ejs');	
 });
 
 app.get('/off', function(req, res) {
